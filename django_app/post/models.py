@@ -14,3 +14,6 @@ class PostPhoto(models.Model):
 
     class Meta:
         order_with_respect_to = 'post'
+
+    def __str__(self):
+        return self.id
