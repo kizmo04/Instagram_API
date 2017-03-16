@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.urls import NoReverseMatch
+from django.urls import resolve
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APILiveServerTestCase
@@ -22,8 +24,15 @@ class PostAPITest(APILiveServerTestCase):
         return user
 
     def test_apis_url_exist(self):
-        reverse('api:post-list')
-        reverse('api:post-detail')
+        try:
+            # reverse('api:post-list')
+            # reverse('api:post-detail')
+            # PostList
+            resolve('/api/post/')
+            # PostDetail
+            resolve('/api/post/1/')
+        except NoReverseMatch as e:
+            self.fail(e)
 
     def test_post_create(self):
         user = self.create_user()
