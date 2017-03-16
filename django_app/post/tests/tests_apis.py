@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import get_user_model
 from django.urls import NoReverseMatch
 from django.urls import resolve
@@ -23,6 +25,10 @@ class PostAPITest(APILiveServerTestCase):
         )
         return user
 
+    def create_user_and_login(self):
+        self.create_user()
+        self.client.login(username=self.test_username, password=self.test_password)
+
     def create_post(self, num=1):
         url = reverse('api:post-list')
         # Post를 생성하는 API주소에 POST요청 response받아옴
@@ -30,6 +36,7 @@ class PostAPITest(APILiveServerTestCase):
             response = self.client.post(url)
             if num == 1:
                 return response
+        return response
 
     def test_apis_url_exist(self):
         try:
@@ -63,7 +70,13 @@ class PostAPITest(APILiveServerTestCase):
         self.assertEqual(Post.objects.exists(), False)
 
     def test_post_list(self):
-        pass
+        self.create_user_and_login()
+        num = random.randrange(1, 50)
+        self.create_post(num)
+        url = reverse('api:post-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), num)
 
     def test_post_update_partial(self):
         pass
