@@ -29,7 +29,7 @@ def post_create(request):
             ))
 
         post = Post.objects.create(author=author)
-        return HttpResponse('{}'.format(post.pk), status=201)
+        return HttpResponse('{}'.format(post.pk))
     else:
         return HttpResponse('Post-create view')
 
