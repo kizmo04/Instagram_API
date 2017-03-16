@@ -4,6 +4,11 @@ from rest_framework import permissions
 from post.models import Post
 from post.serializers import PostSerializer
 
+__all__ = (
+    'PostList',
+    'PostDetail',
+)
+
 
 class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()

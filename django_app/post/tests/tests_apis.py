@@ -1,3 +1,4 @@
+import os
 import random
 
 from django.contrib.auth import get_user_model
@@ -50,7 +51,7 @@ class PostAPITest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertEqual(Post.objects.exists(), False)
 
     def test_post_list(self):
-        self.create_user_and_login()
+        self.create_user_and_login(self.client)
         num = random.randrange(1, 50)
         self.create_post(num)
         url = reverse('api:post-list')
@@ -73,6 +74,24 @@ class PostAPITest(APITestCaseAuthMixin, APILiveServerTestCase):
 
 class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
     def test_photo_add_to_post(self):
-        self.create_user_and_login()
+        user = self.create_user_and_login(self.client)
 
-        self.create_post()
+        response = self.create_post()
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Post.objects.count(), 1)
+        post = Post.objects.first()
+        self.assertEqual(post.author, user)
+
+        url = reverse('api:photo-create')
+
+        file_path = os.path.join(os.path.dirname(__file__), 'img2.gif')
+        print(file_path)
+        with open(file_path, 'rb') as fp:
+            data = {
+                'post': post.id,
+                'photo': fp,
+            }
+            response = self.client.post(url, data)
+            print(response.status_code)
+            print(response.data)

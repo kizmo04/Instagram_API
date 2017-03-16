@@ -16,9 +16,10 @@ class APITestCaseAuthMixin(object):
         return user
 
     def create_user_and_login(self, client):
-        self.create_user()
+        user = self.create_user()
         client.login(username=self.test_username, password=self.test_password)
-
+        return user
+    
     def create_post(self, num=1):
         url = reverse('api:post-list')
         # Post를 생성하는 API주소에 POST요청 response받아옴
