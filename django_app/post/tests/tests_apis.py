@@ -38,7 +38,7 @@ class PostAPITest(APILiveServerTestCase):
         user = self.create_user()
         self.client.login(username=self.test_username, password=self.test_password)
 
-        url = reverse('api:post-create')
+        url = reverse('api:post-list')
         data = {
             'author_id': user.id,
         }
@@ -54,7 +54,7 @@ class PostAPITest(APILiveServerTestCase):
         self.assertEqual(post.author.id, user.id)
 
     def test_cannot_create_post_not_authenticated(self):
-        url = reverse('api:post-create')
+        url = reverse('api:post-list')
         response = self.client.post(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Post.objects.exists(), False)
