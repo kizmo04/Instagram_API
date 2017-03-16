@@ -8,36 +8,12 @@ from rest_framework import status
 from rest_framework.test import APILiveServerTestCase
 
 from post.models import Post
+from utils.testcase import APITestCaseAuthMixin
 
 User = get_user_model()
 
 
-class PostAPITest(APILiveServerTestCase):
-    test_username = 'test_username'
-    test_password = 'test_password'
-
-    default_date = ''
-
-    def create_user(self):
-        user = User.objects.create_user(
-            username=self.test_username,
-            password=self.test_password,
-        )
-        return user
-
-    def create_user_and_login(self):
-        self.create_user()
-        self.client.login(username=self.test_username, password=self.test_password)
-
-    def create_post(self, num=1):
-        url = reverse('api:post-list')
-        # Post를 생성하는 API주소에 POST요청 response받아옴
-        for i in range(num):
-            response = self.client.post(url)
-            if num == 1:
-                return response
-        return response
-
+class PostAPITest(APITestCaseAuthMixin, APILiveServerTestCase):
     def test_apis_url_exist(self):
         try:
             # reverse('api:post-list')
@@ -93,3 +69,10 @@ class PostAPITest(APILiveServerTestCase):
 
     def test_post_destroy(self):
         pass
+
+
+class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
+    def test_photo_add_to_post(self):
+        self.create_user_and_login()
+
+        self.create_post()
