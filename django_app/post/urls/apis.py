@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from post import apis
+from .. import apis as views
 
 urlpatterns = [
-    url(r'^$', apis.PostList.as_view(), name='post-list'),
+    url(r'^$', views.PostList.as_view(), name='post-list'),
 ]
