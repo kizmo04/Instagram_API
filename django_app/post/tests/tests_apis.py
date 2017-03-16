@@ -86,12 +86,23 @@ class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
         url = reverse('api:photo-create')
 
         file_path = os.path.join(os.path.dirname(__file__), 'img2.gif')
-        print(file_path)
         with open(file_path, 'rb') as fp:
             data = {
                 'post': post.id,
                 'photo': fp,
             }
             response = self.client.post(url, data)
-            print(response.status_code)
-            print(response.data)
+
+        # status_code 확인
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # key 확인
+        self.assertIn('post', response.data)
+        self.assertIn('photo', response.data)
+        # value 확인
+        self.assertEqual(post.pk, response.data['post'])
+
+    def test_cannot_photo_add_to_post_without_authentication(self):
+        pass
+
+    def test_cannot_photo_add_to_post_user_is_not_author(self):
+        pass
