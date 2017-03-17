@@ -10,14 +10,29 @@ class MyUser(AbstractUser):
         related_name='relation_user_set',
         through='Relationship',
     )
-    
-    def to_dict(self):
-        return {
-            'pk': self.pk,
-            'username': self.username,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-        }
+
+    def follow(self, user):
+        self.relations_from_user.create(
+            to_user=user,
+            relation_type=Relationship.RELATIONSHIP_FOLLOWING
+        )
+
+    def block(self, user):
+        pass
+
+    @property
+    def following(self):
+        relations = self.relations_from_user.filter(
+            relation_type=Relationship.RELATIONSHIP_FOLLOWING
+        )
+        return MyUser.objects.filter(id__in=relations.values('to_user_id'))
+
+    def followers(self):
+        pass
+
+    def block_users(self):
+        pass
+
 
 
 class Relationship(models.Model):
