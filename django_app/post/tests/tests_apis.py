@@ -38,9 +38,19 @@ class PostAPITest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertIn('author', response.data)
         self.assertIn('created_date', response.data)
 
+        # response 의 author값 검사
         response_author = response.data['author']
         self.assertIn('pk', response_author)
         self.assertIn('username', response_author)
+
+        # response의 postphoto_set검사
+        response_postphoto_set = response.data['photo_list']
+        self.assertIsInstance(response_postphoto_set, list)
+        for postphoto_object in response_postphoto_set:
+            self.assertIn('pk', postphoto_object)
+            self.assertIn('photo', postphoto_object)
+            self.assertIn('created_date', postphoto_object)
+
 
         # 생성후 Post인스턴스가 총 1개여야 함
         self.assertEqual(Post.objects.count(), 1)
@@ -68,6 +78,14 @@ class PostAPITest(APITestCaseAuthMixin, APILiveServerTestCase):
             item_author = item['author']
             self.assertIn('pk', item_author)
             self.assertIn('username', item_author)
+
+            # response의 postphoto_set검사
+            item_postphoto_set = item['photo_list']
+            self.assertIsInstance(item_postphoto_set, list)
+            for postphoto_object in item_postphoto_set:
+                self.assertIn('pk', postphoto_object)
+                self.assertIn('photo', postphoto_object)
+                self.assertIn('created_date', postphoto_object)
 
 
 def test_post_update_partial(self):
@@ -102,7 +120,7 @@ class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
         file_path = os.path.join(os.path.dirname(__file__), 'img2.gif')
         with open(file_path, 'rb') as fp:
             data = {
-                'post': post.id,
+                'post': post.pk,
                 'photo': fp,
             }
             response = self.client.post(url, data)
@@ -113,7 +131,7 @@ class PostPhotoTest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertIn('post', response.data)
         self.assertIn('photo', response.data)
         # value 확인
-        self.assertEqual(post.pk, response.data['post'])
+        self.assertEqual(post.id, response.data['post'])
 
     def test_cannot_photo_add_to_post_without_authentication(self):
         pass
