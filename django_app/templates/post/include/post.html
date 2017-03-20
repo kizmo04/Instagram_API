@@ -54,14 +54,13 @@
                     </button>
                 </form>
 
-                <form action="{% url 'post:comment-add' post_pk=post.pk %}" method="POST"
+                <form action="{% url 'post:comment-add' post_pk=post.pk %}?next={{ request.path }}" method="POST"
                       class="form-comment">{% csrf_token %}
                     <input
                             type="text"
                             placeholder="댓글 달기..."
                             class="input-comment"
                             name="content">
-                    <button type="submit" value="등록"></button>
                 </form>
             </div>
         </div>
