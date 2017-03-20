@@ -36,6 +36,8 @@ STATICFILES_DIRS = [
     BOWER_DIR,
 ]
 
+LOGIN_URL = '/admin/'
+
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 if DEBUG:

@@ -2,6 +2,11 @@ from django.db import models
 
 from config import settings
 
+__all__ = (
+    'Post',
+    'PostPhoto',
+)
+
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)

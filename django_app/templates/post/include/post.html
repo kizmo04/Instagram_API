@@ -1,65 +1,68 @@
 <article class="post">
-                <header class="post-header">
-                    <span class="header-username">{{ post.author.username }}</span>
-                    <span class="header-date">{{ post.created_date }}</span>
-                    {% if user == post.author %}
-                        <span class="header-delete inline-block">
+    <header class="post-header">
+        <span class="header-username">{{ post.author.username }}</span>
+        <span class="header-date">{{ post.created_date }}</span>
+        {% if user == post.author %}
+            <span class="header-delete inline-block">
         <form action="" method="POST">{% csrf_token %}
           <button type="submit">Delete Post</button>
         </form>
       </span>
-                    {% endif %}
-                </header>
-                <div class="post-image-container">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            {% for postphoto in post.postphoto_set.all %}
-                                <div class="swiper-slide">
-                                    <a href="{% url 'post:post-detail'  post.pk %}"><img src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt=""
-                                                    class="post-image"></a>
-                                </div>
-                            {% endfor %}
-                        </div>
+        {% endif %}
+    </header>
+    <div class="post-image-container">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% for postphoto in post.postphoto_set.all %}
+                    <div class="swiper-slide">
+                        <a href="{% url 'post:post-detail'  post.pk %}"><img
+                                src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt=""
+                                class="post-image"></a>
                     </div>
-                </div>
-                <div class="post-bottom-container">
-                    <div class="post-like-users">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="post-bottom-container">
+        <div class="post-like-users">
 
-                        <div class="post-content">{{ post.content|linebreaksbr|truncatechars:100 }}</div>
-                        <div class="post-comments">
-                            {% if post.comment_set.all %}
-                                {% for comment in post.comment_set.all %}
-                                    <div class="post-comment">
-                                        <span class="comment-author">{{ comment.author.username }}</span>
-                                        <span class="comment-content">{{ comment.content }}</span>
-                                        {% if user == comment.author %}
-                                            <span class="comment-delete inline-block">
+            <div class="post-content">{{ post.content|linebreaksbr|truncatechars:100 }}</div>
+            <div class="post-comments">
+                {% if post.postcomment_set.all %}
+                    {% for comment in post.postcomment_set.all %}
+                        <div class="post-comment">
+                            <span class="comment-author">{{ comment.author.username }}</span>
+                            <span class="comment-content">{{ comment.content }}</span>
+                            {% if user == comment.author %}
+                                <span class="comment-delete inline-block">
             <form action="" method="POST">{% csrf_token %}
               <button type="submit">X</button>
             </form>
           </span>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
                             {% endif %}
                         </div>
-                        <div class="post-comment-form-container clearfix">
-                            <form action="" method="POST" class="form-like">{% csrf_token %}
-                                {% if user in post.like_users.all %}
-                                    <button type="submit" class="btn-like sprite-heart-full"></button>
-                                {% else %}
-                                    <button type="submit" class="btn-like sprite-heart-empty"></button>
-                                {% endif %}
-                                </button>
-                            </form>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="post-comment-form-container clearfix">
+                <form action="" method="POST" class="form-like">{% csrf_token %}
+                    {% if user in post.like_users.all %}
+                        <button type="submit" class="btn-like sprite-heart-full"></button>
+                    {% else %}
+                        <button type="submit" class="btn-like sprite-heart-empty"></button>
+                    {% endif %}
+                    </button>
+                </form>
 
-                            <form action="" method="POST" class="form-comment">{% csrf_token %}
-                                <input
-                                        type="text"
-                                        placeholder="댓글 달기..."
-                                        class="input-comment"
-                                        name="content">
-                            </form>
-                        </div>
-                    </div>
+                <form action="{% url 'post:comment-add' post_pk=post.pk %}" method="POST"
+                      class="form-comment">{% csrf_token %}
+                    <input
+                            type="text"
+                            placeholder="댓글 달기..."
+                            class="input-comment"
+                            name="content">
+                    <button type="submit" value="등록"></button>
+                </form>
+            </div>
+        </div>
 </article>
