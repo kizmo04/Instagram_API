@@ -1,0 +1,17 @@
+<form action="" method="POST">{% csrf_token %}
+    {% if form.non_field_errors %}
+    {{ form.non_field_errors }}
+    {% endif %}
+
+    {% for field in form %}
+    <div>
+        {{ field.label_tag }}
+        {{ field}}
+    </div>
+    {% endfor %}
+    <!--<input type="text" name="username" placeholder="username"/>-->
+    <!--<input type="password" name="password" placeholder="password"/>-->
+    <!--{{ form.password }}-->
+    <!--{{ form.username }}-->
+    <button type="submit" value="login">Login</button>
+</form>

@@ -17,6 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 # HttpRequest/HttpResponse를 위한 urls
+from django.conf.urls.static import static
+
+from django.conf import settings
 from post.urls import views as post_urls
 # JSONResponse API를 위한 url
 from post.urls import apis as post_apis_urls
@@ -29,3 +32,7 @@ urlpatterns = [
     url(r'^post/', include(post_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api')),
 ]
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
