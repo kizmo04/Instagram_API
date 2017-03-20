@@ -16,9 +16,16 @@
                     {% endif %}
                 </header>
                 <div class="post-image-container">
-                    {% for postphoto in post.postphoto_set.all %}
-                        <a href=""><img src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt="" class="post-image"></a>
-                    {% endfor %}
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for postphoto in post.postphoto_set.all %}
+                                <div class="swiper-slide">
+                                    <a href=""><img src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt=""
+                                                    class="post-image"></a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
                 <div class="post-bottom-container">
                     <div class="post-like-users">
@@ -67,5 +74,9 @@
     </div>
 
 {% endblock %}
-
+{% block script %}
+    <script>
+        new Swiper('.swiper-container');
+    </script>
+{% endblock %}
 {#각 post에 연결된 Comment object list를 출력#}
