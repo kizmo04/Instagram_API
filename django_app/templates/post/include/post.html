@@ -1,9 +1,4 @@
-{% extends 'common/base.html' %}
-
-{% block content %}
-    <div class="post-list-container">
-        {% for post in posts %}
-            <article class="post">
+<article class="post">
                 <header class="post-header">
                     <span class="header-username">{{ post.author.username }}</span>
                     <span class="header-date">{{ post.created_date }}</span>
@@ -20,7 +15,7 @@
                         <div class="swiper-wrapper">
                             {% for postphoto in post.postphoto_set.all %}
                                 <div class="swiper-slide">
-                                    <a href=""><img src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt=""
+                                    <a href="{% url 'post:post-detail'  post.pk %}"><img src="{{ MEDIA_URL }}{{ postphoto.photo.url }}" alt=""
                                                     class="post-image"></a>
                                 </div>
                             {% endfor %}
@@ -67,16 +62,4 @@
                             </form>
                         </div>
                     </div>
-            </article>
-        {% endfor %}
-
-        <a href="" class="btn-add-post">+ Add Post</a>
-    </div>
-
-{% endblock %}
-{% block script %}
-    <script>
-        new Swiper('.swiper-container');
-    </script>
-{% endblock %}
-{#각 post에 연결된 Comment object list를 출력#}
+</article>
