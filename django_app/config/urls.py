@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+# HttpRequest/HttpResponse를 위한 urls
 from post.urls import views as post_urls
+# JSONResponse API를 위한 url
 from post.urls import apis as post_apis_urls
 
 api_urlpatterns = [
