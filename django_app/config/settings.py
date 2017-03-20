@@ -23,8 +23,18 @@ CONFIG_FILE_COMMON = os.path.join(CONF_DIR, 'settings_common.json')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+BOWER_DIR = os.path.join(ROOT_DIR, 'bower_components')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    STATIC_DIR,
+    BOWER_DIR,
+]
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
@@ -147,16 +157,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
