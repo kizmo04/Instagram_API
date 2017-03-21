@@ -6,13 +6,19 @@
             {% include 'post/include/post.html' with post=post %}
         {% endfor %}
 
-        <a href="" class="btn-add-post">+ Add Post</a>
+        <a href="{% url 'post:post-create' %}" class="btn-add-post">+ Add Post</a>
     </div>
 
 {% endblock %}
 {% block script %}
     <script>
-        new Swiper('.swiper-container');
+        $(document).ready(function () {
+            new Swiper('.swiper-container');
+            new Swiper('.swiper-container', {
+                autoHeight: true,
+
+            });
+        });
     </script>
 {% endblock %}
 {#각 post에 연결된 Comment object list를 출력#}
