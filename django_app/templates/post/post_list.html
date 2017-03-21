@@ -12,12 +12,8 @@
 {% endblock %}
 {% block script %}
     <script>
-        $(document).ready(function () {
-            new Swiper('.swiper-container');
-            new Swiper('.swiper-container', {
-                autoHeight: true,
-
-            });
+        new Swiper('.swiper-container', {
+            autoHeight: true,
         });
     </script>
 {% endblock %}

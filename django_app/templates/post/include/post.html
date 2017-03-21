@@ -4,9 +4,10 @@
         <span class="header-date">{{ post.created_date }}</span>
         {% if user == post.author %}
             <span class="header-delete inline-block">
-        <form action="" method="POST">{% csrf_token %}
+        <form action="{% url 'post:post-delete' pk=post.pk %}" method="POST">{% csrf_token %}
           <button type="submit">Delete Post</button>
         </form>
+            <a href="{% url 'post:post-delete' pk=post.pk %}">확인하고 지우기</a>
       </span>
         {% endif %}
     </header>

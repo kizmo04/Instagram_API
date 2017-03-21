@@ -12,7 +12,9 @@
 {% endblock %}
 {% block script %}
     <script>
-        new Swiper('.swiper-container');
+        new Swiper('.swiper-container', {
+            autoHeight: true,
+        });
     </script>
 {% endblock %}
 {#각 post에 연결된 Comment object list를 출력#}
