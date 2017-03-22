@@ -13,18 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 
-# HttpRequest/HttpResponse를 위한 urls
-from django.conf.urls.static import static
-
-from django.conf import settings
-from post.urls import views as post_urls
-# JSONResponse API를 위한 url
+from member.urls import apis as member_apis_urls
 from post.urls import apis as post_apis_urls
+from post.urls import views as post_urls
 
 api_urlpatterns = [
+    url(r'^member/', include(member_apis_urls)),
     url(r'^post/', include(post_apis_urls)),
 ]
 urlpatterns = [
