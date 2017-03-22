@@ -34,7 +34,6 @@ class MyUser(AbstractUser):
         pass
 
 
-
 class Relationship(models.Model):
     RELATIONSHIP_FOLLOWING = 1
     RELATIONSHIP_BLOCKED = 2
