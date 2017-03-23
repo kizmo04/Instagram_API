@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^post/', include(post_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
