@@ -23,7 +23,7 @@ class PostList(generics.ListCreateAPIView):
         serializer.save(author=self.request.user)
 
     def list(self, request, *args, **kwargs):
-        time.sleep(2)
+        time.sleep(1)
         return super().list(request, *args, **kwargs)
 
 
